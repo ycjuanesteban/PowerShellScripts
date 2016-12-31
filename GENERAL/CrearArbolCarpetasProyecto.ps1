@@ -1,6 +1,6 @@
 <# 
 .SYNOPSIS
-  Script que ayuda a crear un arbol de carpetas necesarias para un proyecto de desarrollo
+  Script que ayuda a crear un árbol de carpetas necesarias para un proyecto de desarrollo
 .NOTES 
     File Name      : CrearArbolCarpetasProyecto.ps1  
     Author         : Juan Esteban Yarce Carmona (https://github.com/JuanEstebanYC)
@@ -8,7 +8,7 @@
 
 $RUTAPARCIAL = "RUTA PROYECTO";
 $NOMBREPROYECTO = "NOMBRE PROYECTO";
-$RUTACOMPLETA = "$RUTAPARCIAL$NOMBREPROYECTO";
+$RUTACOMPLETA = "$RUTAPARCIAL\$NOMBREPROYECTO";
 $CARPETAS = @("CODIGO","DOCUMENTACION","ENTREGAS","PRUEBAS");
 
 if(!(Test-Path -Path $RUTACOMPLETA)){
