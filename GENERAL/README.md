@@ -1,7 +1,7 @@
 # General
 
 
-Scripts que facilitan el trabajo diario actualizando alguna actividades tediosas.
+Scripts que facilitan el trabajo diario automatizando alguna actividades tediosas.
 
 ----------
 
