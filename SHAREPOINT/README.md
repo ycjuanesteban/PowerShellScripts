@@ -16,8 +16,8 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 
 ## ToDo
 
- [ ] WarmUp
- [ ] BackUp - Restore Site Collection
+- [ ] WarmUp
+- [ ] BackUp - Restore Site Collection
 
 
 [LinkCreacionHNSC]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/CreacionHNSC.ps1
