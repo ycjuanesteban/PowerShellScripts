@@ -10,6 +10,8 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 
 > - [CreacionHNSC.ps1][LinkCreacionHNSC]: Script que permite crear sitio como Host Named Site Collection.
 > - [InstalacionWsp.ps1][LinkInstalacionWsp]: Script que permite automatizar el proceso de instalación de un WebPart.
+> - [WarmUp.ps1][LinkWarmUp]: Script que recorre todos los sitios y les hace un request para precargarlos y que posteriormente
+                              cuando el usuario quiera ingresar no demore tanto cargando.
 
 
 ## ToDo
@@ -19,3 +21,4 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 
 [LinkCreacionHNSC]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/CreacionHNSC.ps1
 [LinkInstalacionWsp]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/InstalacionWsp.ps1
+[LinkWarmUp]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/WarmUp.ps1

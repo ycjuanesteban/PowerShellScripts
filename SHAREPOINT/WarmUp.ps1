@@ -15,6 +15,18 @@ Write-Host "Consultando los aplicativos web" -ForegroundColor Green;
 $was = Get-SPWebApplication -IncludeCentralAdministration |Sort-Object IsAdministrationWebApplication;
 foreach($wa in $was)
 {
-    PeticionSitio -url $site.Url;
+    $site = Get-SPSite $wa.Url;
+    
+    if($site.AllWebs -ne $null)
+    {
+        foreach($web in $site.AllWebs)
+        {
+           PeticionSitio -url $web.Url; 
+        }
+    }
+    else
+    {
+        PeticionSitio -url $site.Url;
+    }
 }
 
