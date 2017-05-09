@@ -11,8 +11,6 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 > - [CreacionHNSC.ps1][LinkCreacionHNSC]: Script que permite crear sitio como Host Named Site Collection.
 > - [InstalacionWsp.ps1][LinkInstalacionWsp]: Script que permite automatizar el proceso de instalación de un WebPart.
 
-----------
-
 
 ## ToDo
 
