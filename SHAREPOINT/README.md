@@ -18,6 +18,7 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 
 - [ ]  **WarmUp**
 - [ ]  **BackUp - Restore Site Collection**
+- [ ]  **Carga de usuarios desde un archivo .csv**
 
 [LinkCreacionHNSC]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/CreacionHNSC.ps1
 [LinkInstalacionWsp]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/InstalacionWsp.ps1
