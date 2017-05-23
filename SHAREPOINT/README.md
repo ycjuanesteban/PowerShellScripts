@@ -22,4 +22,4 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 
 [LinkCreacionHNSC]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/CreacionHNSC.ps1
 [LinkInstalacionWsp]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/InstalacionWsp.ps1
-[LinkWarmUp]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/WarmUp.ps1
+[LinkWarmUp]: https://github.com/JuanEstebanYC/PowerShellScripts/tree/master/SHAREPOINT/WarmUp/SHAREPOINT/WarmUp.ps1
