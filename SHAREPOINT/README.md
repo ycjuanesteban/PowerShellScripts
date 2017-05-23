@@ -16,7 +16,7 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 
 ## ToDo
 
-- [ ]  **WarmUp**
+- [x]  **WarmUp**
 - [ ]  **BackUp - Restore Site Collection**
 - [ ]  **Carga de usuarios desde un archivo .csv**
 
