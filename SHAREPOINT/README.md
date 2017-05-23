@@ -19,6 +19,7 @@ Scripts que facilitan el trabajo en SharePoint automatizando tareas con el fin d
 - [x]  **WarmUp**
 - [ ]  **BackUp - Restore Site Collection**
 - [ ]  **Carga de usuarios desde un archivo .csv**
+- [ ]  **Eliminación de usuarios de SharePoint que no tengan CUP asociado**
 
 [LinkCreacionHNSC]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/CreacionHNSC.ps1
 [LinkInstalacionWsp]: https://github.com/JuanEstebanYC/PowerShellScripts/blob/master/SHAREPOINT/InstalacionWsp.ps1
