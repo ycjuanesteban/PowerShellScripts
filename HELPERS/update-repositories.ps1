@@ -5,7 +5,7 @@ function GetRightBranchName{
 
     $branch = $null;
 
-    $branchPrincipal = git branch --list $branchName;
+    $branchPrincipal = git branch -a --list *$branchName*;
 
     if($branchPrincipal -ne $null)
     {
@@ -14,8 +14,8 @@ function GetRightBranchName{
 
     if($commodinName -ne $null -and $branchPrincipal -eq $null) 
     { 
-        $branchCommodin  = git branch --list $commodinName; 
-
+        $branchCommodin = git branch -a --list *$commodinName*;
+        
         if($branchCommodin -eq $null) 
         { 
             $branch = $commodinName;    
@@ -27,17 +27,17 @@ function GetRightBranchName{
 
 function CheckBranchAndPull 
 {
-     param([string] $branchToPull)
+    param([string] $branchToPull)
 
     $currentBranch = git rev-parse --abbrev-ref HEAD;
 
     if($branchToPull -ne $null -and [System.String]::Compare($currentBranch, $branchToPull) -ne 0)
     {
-        Write-Host -ForegroundColor green $branchToPull;
-        git checkout $branchToPull
+        git checkout $branchToPull --quiet
     }
 
-    git pull
+    Write-Host -ForegroundColor green "--- Pulling: $branchToPull";
+    git pull --quiet
 }
 
 $folders = Get-ChildItem . -Directory
@@ -48,18 +48,28 @@ foreach ($folder in $folders)
 
     if(Get-ChildItem . -Directory -Hidden | Where-Object { $_.Name -eq '.git' })
     {
-        git fetch --prune
+        Write-Host -ForegroundColor green "`nGit fetch -> $($folder.Name)"
+        git fetch --prune --quiet
+
+        Write-Host -ForegroundColor green "Removing 'gone' branches"
+        git branch -vv | where {$_ -match '\[origin/.*: gone\]'} | foreach { git branch -D $_.split(" ", [StringSplitOptions]'RemoveEmptyEntries')[0]}
 
         $status = git diff --name-only
         if([System.String]::IsNullOrWhiteSpace($status))
         {
-            Write-Host -ForegroundColor green "Updating $($folder.Name)"
+            Write-Host -ForegroundColor green "-- Updating"
 
             $branchToPull = GetRightBranchName -branchName 'main' -commodinName 'master'
             CheckBranchAndPull -branchToPull $branchToPull
 
             $branchToPull = GetRightBranchName -branchName 'dev'
-            CheckBranchAndPull -branchToPull $branchToPull
+            if(![System.String]::IsNullOrWhiteSpace($branchToPull))
+            {
+                CheckBranchAndPull -branchToPull $branchToPull
+            }
+        }
+        else {
+            Write-Host -ForegroundColor red "-- WIP in this repository"
         }
     }
 
