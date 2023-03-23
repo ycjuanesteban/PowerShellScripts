@@ -40,6 +40,21 @@ function CheckBranchAndPull
     git pull --quiet
 }
 
+function checkGoneBranches
+{
+    $goneBranches = git branch -vv | where {$_ -match '\[origin/.*: gone\]'}
+
+    if($goneBranches -ne $null)
+    {
+        Write-Host -ForegroundColor green "Removing 'gone' branches"
+
+        foreach($goneBranch in $goneBranches)
+        {
+            git branch -D $goneBranch.split(" ", [StringSplitOptions]'RemoveEmptyEntries')[0]
+        }
+    }
+}
+
 $folders = Get-ChildItem . -Directory
 
 foreach ($folder in $folders) 
@@ -51,8 +66,7 @@ foreach ($folder in $folders)
         Write-Host -ForegroundColor green "`nGit fetch -> $($folder.Name)"
         git fetch --prune --quiet
 
-        Write-Host -ForegroundColor green "Removing 'gone' branches"
-        git branch -vv | where {$_ -match '\[origin/.*: gone\]'} | foreach { git branch -D $_.split(" ", [StringSplitOptions]'RemoveEmptyEntries')[0]}
+        checkGoneBranches
 
         $status = git diff --name-only
         if([System.String]::IsNullOrWhiteSpace($status))
