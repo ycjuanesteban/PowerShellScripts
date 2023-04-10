@@ -36,6 +36,32 @@ function RemoveGoneBranches
     }
 }
 
+function CheckWIPAndStash
+{
+    param([string] $status)
+
+    if(![System.String]::IsNullOrWhiteSpace($status))
+    {
+        Write-Host -ForegroundColor yellow "-- WIP: stash"
+        git stash --quiet
+    }
+}
+
+function CheckWIPAndUnstash
+{
+    param(
+        [string] $status,
+        [string] $currentBranch
+    )
+
+    if(![System.String]::IsNullOrWhiteSpace($status))
+    {
+        Write-Host -ForegroundColor yellow "-- WIP: stash pop"
+        git checkout $currentBranch --quiet
+        git stash pop --quiet
+    }
+}
+
 $folders = Get-ChildItem . -Directory
 
 foreach ($folder in $folders) 
@@ -47,34 +73,27 @@ foreach ($folder in $folders)
         Write-Host -ForegroundColor green "`nGit updating -> $($folder.Name)"
         git fetch --prune --quiet
         
-        $currentGitBranch = git branch --show-current
+        $currentBranch = git branch --show-current
 
         $status = git status --porcelain
-        if(![System.String]::IsNullOrWhiteSpace($status))
-        {
-            Write-Host -ForegroundColor yellow "-- WIP: stagin work"
-            git stash --quiet
-        }
+        
+        CheckWIPAndStash -status $status
 
         Write-Host -ForegroundColor green "-- Updating"
 
         $branchToPull = git branch | Where-Object { $_.EndsWith("main") -or $_.EndsWith("master") }
-        CheckBranchAndPull -branchToPull $branchToPull -currentBranch $currentGitBranch
+        CheckBranchAndPull -branchToPull $branchToPull -currentBranch $currentBranch
 
         $branchToPull = git branch | Where-Object { $_.EndsWith("dev") }
         if(![System.String]::IsNullOrWhiteSpace($branchToPull))
         {
-            CheckBranchAndPull -branchToPull $branchToPull -currentBranch $currentGitBranch
+            CheckBranchAndPull -branchToPull $branchToPull -currentBranch $currentBranch
         }
 
         RemoveGoneBranches
 
-        if(![System.String]::IsNullOrWhiteSpace($status))
-        {
-            Write-Host -ForegroundColor yellow "-- WIP: checking out to the branch"
-            git checkout $currentGitBranch
-            git stash pop --quiet
-        }
+        CheckWIPAndUnstash -status $status -currentBranch $currentBranch
+        
     }
 
     cd ..
