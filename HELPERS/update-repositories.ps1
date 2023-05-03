@@ -27,7 +27,7 @@ function RemoveGoneBranches
 
     if($goneBranches -ne $null)
     {
-        Write-Host -ForegroundColor green "Removing 'gone' branches"
+        Write-Host -ForegroundColor yellow "-- Removing 'gone' branches"
 
         foreach($goneBranch in $goneBranches)
         {
@@ -49,15 +49,11 @@ function CheckWIPAndStash
 
 function CheckWIPAndUnstash
 {
-    param(
-        [string] $status,
-        [string] $currentBranch
-    )
+    param([string] $status)
 
     if(![System.String]::IsNullOrWhiteSpace($status))
     {
         Write-Host -ForegroundColor yellow "-- WIP: stash pop"
-        git checkout $currentBranch --quiet
         git stash pop --quiet
     }
 }
@@ -81,18 +77,24 @@ foreach ($folder in $folders)
 
         Write-Host -ForegroundColor green "-- Updating"
 
-        $branchToPull = git branch | Where-Object { $_.EndsWith("main") -or $_.EndsWith("master") }
-        CheckBranchAndPull -branchToPull $branchToPull -currentBranch $currentBranch
+        $masterBranch = git branch | Where-Object { $_.EndsWith("main") -or $_.EndsWith("master") }
+        CheckBranchAndPull -branchToPull $masterBranch -currentBranch $currentBranch
 
-        $branchToPull = git branch | Where-Object { $_.EndsWith("dev") }
-        if(![System.String]::IsNullOrWhiteSpace($branchToPull))
+        $devBranch = git branch | Where-Object { $_.EndsWith("dev") }
+        if(![System.String]::IsNullOrWhiteSpace($devBranch))
         {
-            CheckBranchAndPull -branchToPull $branchToPull -currentBranch $currentBranch
+            CheckBranchAndPull -branchToPull $devBranch -currentBranch $currentBranch
         }
 
         RemoveGoneBranches
+        
+        $existCurrentBranch = git branch | Where-Object { $_.EndsWith($currentBranch) }
+        if(![System.String]::IsNullOrWhiteSpace($existCurrentBranch))
+        {
+            git checkout $currentBranch --quiet
+        }        
 
-        CheckWIPAndUnstash -status $status -currentBranch $currentBranch
+        CheckWIPAndUnstash -status $status
         
     }
 
